@@ -38,6 +38,8 @@ gem 'factory_bot_rails'
 gem 'faker'
 
 gem 'enum_help'
+gem 'font-awesome-rails'
+gem 'font-awesome-sass', '~> 6.2.1'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
