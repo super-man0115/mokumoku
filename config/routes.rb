@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
+  get 'search_tag/:id', to: 'events#search_tag', as: 'search_tag'
   resources :users, only: %i[new create]
   resources :events do
     collection do

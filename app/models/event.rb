@@ -10,6 +10,8 @@ class Event < ApplicationRecord
   has_many :attendees, through: :attendances, class_name: 'User', source: :user
   has_many :bookmarks, dependent: :destroy
   has_one_attached :thumbnail
+  has_many :event_tags, dependent: :destroy
+  has_many :tags, through: :event_tags
 
   scope :future, -> { where('held_at > ?', Time.current) }
   scope :past, -> { where('held_at <= ?', Time.current) }
@@ -26,5 +28,19 @@ class Event < ApplicationRecord
 
   def future?
     !past?
+  end
+
+  def save_with_tags(tag_names:)
+    ActiveRecord::Base.transaction do
+      self.tags = tag_names.map { |name| Tag.find_or_initialize_by(name: name.strip) }
+      save!
+    end
+    true
+  rescue StandardError
+    false
+  end
+
+  def tag_names
+    tags.map(&:name).join(',')
   end
 end
