@@ -36,6 +36,9 @@
           <div>
             <%= image_tag @event.decorate.thumbnail, class: 'w-100' %>
           </div>
+          <div class='d-flex'>
+            <%= render @event.tags %>
+          </div>  
         </div>
       </div>
       <div class="card">
@@ -57,7 +60,7 @@
         <div class="card-body">
           <div class="d-flex align-items-center gap-3 mb-3">
             <%= image_tag @event.user.decorate.avatar, class: 'rounded-circle avatar-lg' %>
-            <%= @event.user.name %>
+            <%= link_to @event.user.name, user_path(@event.user) %>
           </div>
           <div class="p-3 bg-light">
             イベント数
@@ -109,6 +112,16 @@
         <div class="card-header">
           <i class="bi bi-people"></i>
           参加者（<%= @event.attendees.size %>人）
+            <div class="inner">
+            <% if @user.attend?(@event) %>
+              シェアする
+              <%= link_to "https://twitter.com/share?url?=#{request.url}/&text=#{@event.title}に参加します! %0a %23もくもく会", title: 'Twitter', target: '_blank' do %>
+                <i class="fab fa-twitter fa-2x" style='color: #3399FF;'></i>
+              <% end %>
+              <div class="line-it-button" data-lang="ja" data-type="share-c" data-env="REAL" data-url="http://localhost:3000/events/<%= @event.id %>" data-color="default" data-size="small" data-count="false" data-ver="3" style="display: none;"></div>
+              <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+            <% end %>  
+            </div>   
         </div>
         <div class="card-body">
            <ul class="list-unstyled">

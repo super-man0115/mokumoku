@@ -29,7 +29,7 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.build(event_params)
-    if @event.save
+    if @event.save_with_tags(tag_names: params.dig(:event, :tag_names).split(',').uniq)
       User.all.find_each do |user|
         NotificationFacade.created_event(@event, user)
       end
@@ -42,6 +42,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @user = current_user
   end
 
   def edit
@@ -50,12 +51,18 @@ class EventsController < ApplicationController
 
   def update
     @event = current_user.events.find(params[:id])
-    if @event.update(event_params)
+    @event.assign_attributes(event_params)
+    if @event.save_with_tags(tag_names: params.dig(:event, :tag_names).split(',').uniq)
       redirect_to event_path(@event)
     else
       render :edit
     end
   end
+
+  def search_tag
+    @tag = Tag.find(params[:id])
+    @events = @tag.events.order(created_at: :desc).page(params[:page])
+  end  
 
   private
 

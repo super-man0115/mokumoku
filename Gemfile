@@ -38,6 +38,8 @@ gem 'factory_bot_rails'
 gem 'faker'
 
 gem 'enum_help'
+gem 'font-awesome-rails'
+gem 'font-awesome-sass', '~> 6.2.1'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
@@ -47,6 +49,12 @@ group :development, :test do
   gem 'rb-readline'
   gem 'rspec-rails'
 end
+
+group :test do
+  gem 'capybara', '~> 3.23'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
+end  
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

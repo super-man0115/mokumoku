@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Mypage::ProfilesController < Mypage::BaseController
+
   def show
     @user = current_user
   end
@@ -17,6 +18,6 @@ class Mypage::ProfilesController < Mypage::BaseController
   private
 
   def profile_params
-    params.require(:user).permit(:name, :avatar)
+    params.require(:user).permit(:name, :avatar, :twitter_name, :hobby, :profile)
   end
 end

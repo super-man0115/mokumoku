@@ -1,0 +1,46 @@
+<div class="card">
+  <!-- Card header -->
+  <div class="card-header">
+    <h3 class="mb-0"><%= @user.name %>のプロフィール</h3>
+  </div>
+  <!-- Card body -->
+  <div class="card-body">
+      <div class="d-lg-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center mb-4 mb-lg-0">
+          <%= image_tag @user.decorate.avatar, class: 'avatar-xl rounded-circle' %>
+          <div class="ms-3">
+            <h4 class="mb-3">User avatar</h4>
+            <div id="js-user-relationships-<%= @user.id %>">
+              <% if current_user.following?(@user) %>
+                <%= render 'relationships/unfollow', user: @user %>              
+              <% else %>
+                <%= render 'relationships/follow', user: @user %>
+              <% end %>
+            </div>  
+          </div>
+        </div>
+      </div>
+    
+    <hr class="my-5">
+    <div>
+      <h4 class="mb-0">Personal Details</h4>
+      <p class="mb-4">
+        <% if @user.twitter_name.presence %>
+          <a href="https://twitter.com/<%= @user.twitter_name %>?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @<%= @user.twitter_name %></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <% end %>
+      </p>
+      <div class="mb-3">
+        <h3 class='form-label'>Name</h3>
+        <p class='form-control'><%= @user.name %></p>
+      </div> 
+      <div class="mb-3">
+        <h3 class='form-label'>Hobby</h3>
+        <p class='form-control'><%= @user.hobby %></p>
+      </div>
+      <div class="mb-3">
+        <h3 class='form-label'>profile</h3>
+        <p class='form-control'><%= @user.profile %></p>
+      </div>
+    </div>
+  </div>
+</div>
