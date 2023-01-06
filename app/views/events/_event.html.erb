@@ -8,8 +8,11 @@
         <%= link_to event.title, event_path(event)  %>
       </h4>
       <p class="card-text"><%= event.content %></p>
+
       <div class='d-flex'>
-        <%= render event.tags %>
+        <% event.tags.each do |tag| %>
+          <%= render 'tags/tag', tag: tag %> 
+        <% end %>  
       </div>  
       <hr />
       <div class="d-flex justify-content-between">
@@ -26,7 +29,7 @@
       <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center gap-3">
           <%= image_tag event.user.decorate.avatar, class: 'avatar-sm rounded-circle' %>
-          <%= event.user.name %>
+          <%= link_to event.user.name, user_path(event.user) %>
         </div>
         <% if logged_in? %>
           <div id="js-event-bookmark-<%= event.id %>">

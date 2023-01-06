@@ -19,6 +19,9 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   validates :email, uniqueness: true
+  validates :hobby, length: { maximum: 252 }
+  validates :profile, length: { maximum: 65535 }
+  validates :twitter_name, length: { maximum: 15 }
 
   scope :allowing_created_event_notification,
         -> { joins(:notification_timings).merge(NotificationTiming.created_event) }
