@@ -10,6 +10,13 @@
           <%= image_tag @user.decorate.avatar, class: 'avatar-xl rounded-circle' %>
           <div class="ms-3">
             <h4 class="mb-3">User avatar</h4>
+            <div id="js-user-relationships-<%= @user.id %>">
+              <% if current_user.following?(@user) %>
+                <%= render 'relationships/unfollow', user: @user %>              
+              <% else %>
+                <%= render 'relationships/follow', user: @user %>
+              <% end %>
+            </div>  
           </div>
         </div>
       </div>
